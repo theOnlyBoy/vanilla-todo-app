@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nik Shakhmatov">
+    <title>Vanilla Todo App</title>
+    <link rel="stylesheet" href="./styles/app.css">
+</head>
+<body>
+
+<!-- App container -->
+<div class="appContainer" id="appContainer">
+    <h1>Vanilla Todo</h1>
+    <div class="todoProgress">
+        <div class="todoProgress__bar" id="todoProgressBar"></div>
+    </div>
+
+    <form id="todoForm" method="POST" action="/" role="form" class="todoForm">
+        <div class="todoForm__header">
+            <div class="todoForm__controls">
+                <input type="search" id="todoInput" class="todoForm__input" role="textbox" placeholder="Enter text here"
+                       maxlength="140" autocomplete="off" tabindex="0" autofocus disabled>
+                <input type="submit" id="todoSubmitButton" class="todoForm__button" value="Add" role="button" disabled>
+            </div>
+            <div class="todoForm__inputError" id="inputError" tabindex="2" hidden></div>
+        </div>
+        <ul id="todoList" class="todoList" role="list" data-empty-list-message="No items so far"></ul>
+    </form>
+</div>
+
+<!-- Template for list item -->
+<template id="todoItemTemplate">
+    <li class="todoList__item" data-item-id="{{id}}" role="listitem" tabindex="0">
+        <div class="todoList__itemText" data-item-text>{{text}}</div>
+        <div class="todoList__itemControls">
+            <input type="button" class="todoList__itemDeleteButton"
+                   data-item-delete="{{id}}" title="Remove item">
+        </div>
+    </li>
+</template>
+
+<!-- Visual sugar thing (gradient masking) for nicer UI -->
+<svg width="200px" height="20px" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="gradient" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0" stop-color="#fff"/>
+            <stop offset="1" stop-color="#000"/>
+        </linearGradient>
+    </defs>
+</svg>
+
+<script src="./dist/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "extends": "eslint-config-airbnb-es5",
+  "plugins": [
+    "jest"
+  ],
+  "env": {
+    "jest/globals": true
+  },
+  "rules": {
+    "indent": ["error", 4],
+    "comma-dangle": ["error", "always-multiline"],
+    "brace-style": ["error", "stroustrup"],
+    "valid-jsdoc": 0
+  }
+}

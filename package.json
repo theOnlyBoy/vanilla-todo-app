@@ -1,0 +1,25 @@
+{
+  "name": "vanilla-todo-app",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Nik Shakhmatov",
+  "private": true,
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "yarn build && open -a \"Google Chrome\" index.html",
+    "lint": "eslint js/*.js",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-es5": "^1.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "jest": "^24.9.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}

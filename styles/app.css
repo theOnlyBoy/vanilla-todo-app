@@ -1,0 +1,325 @@
+/**
+ * Vanilla To-Do App's Styles
+ * Trying to follow kinda BEM specs in general, but not by 100%.
+ *
+ * For instance, there are different approaches in different companies with their own rules.
+ * So I personally like to use `__` instead of `--` as a block-->element separator.
+ * It looks less trashy without gaps and more visually more pleasant (as for me) and distinct with `-` modifier.
+ * Anyway, here I'm just doing my best and not trying to follow any specs by 100%, everything depends.
+ */
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * Suggesting that I'm creating the app for modern browsers let's use CSS custom properties for more flexibility.
+ * In case when we need won't them we'll just use PostCSS plugin for to convert them into plain CSS values.
+ *--------------------------------------------------------------------------------------------------------------------*/
+:root {
+    --color-text-dark: #222;
+    --color-text-light: #fff;
+    --color-button-bg: #1c7f39;
+    --color-button-bg-hover: #10852b;
+    --color-button-text: #fff;
+    --color-error: #fe341e;
+    --color-bg-main: #488048;
+    --font-size-default: 16px;
+    --font-family-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --line-height-default: 1.2;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * Cross-browser normalization.
+ * Normally I'd use `normalize.css`, but here for optimization/size sake I normalize for existent elements only.
+ *--------------------------------------------------------------------------------------------------------------------*/
+* {
+    box-sizing: border-box;
+}
+
+    *:focus {
+        outline: dotted 3px rgba(255, 255, 255, .7);
+        outline-offset: 2px;
+    }
+
+html {
+    height: 100%;
+    line-height: var(--line-height-default);
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%; /* iOS */
+}
+
+body {
+    background: var(--color-bg-main) url("../images/bright-squares.png");
+    color: var(--color-text-dark);
+    font: normal var(--font-size-default) var(--font-family-default);
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+button,
+input {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: var(--line-height-default);
+    margin: 0; /* FF, Safari */
+    -webkit-appearance: textfield; /* Safari */
+}
+
+button,
+[type="button"],
+[type="submit"] {
+    -webkit-appearance: button; /* Edge */
+}
+
+template {
+    display: none; /* IE 10+ */
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * App styles
+ *--------------------------------------------------------------------------------------------------------------------*/
+h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.actionGenerateItems {
+    align-self: flex-end;
+    color: var(--color-text-light);
+    float: right;
+    font-size: .8rem;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * Input form
+ *--------------------------------------------------------------------------------------------------------------------*/
+.todoForm {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 90vw;
+    position: absolute;
+    top: 130px;
+    width: 400px;
+}
+    .todoForm::after {
+        bottom: 10px;
+        color: var(--color-text-light);
+        content: "Keyboard support in list: tab | up | down | space | backspace";
+        font-size: .6rem;
+        opacity: .5;
+        position: absolute;
+    }
+
+.todoForm__controls {
+    display: flex;
+}
+
+.todoForm__header {
+    height: 80px;
+    position: relative;
+    z-index: 2;
+}
+
+    .todoForm__header::after {
+        background: var(--color-bg-main) url("../images/bright-squares.png");
+        bottom: -20px;
+        content: "";
+        display: block;
+        height: 20px;
+        left: 0;
+        position: absolute;
+        right: 0;
+        -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+    }
+
+.todoForm__input {
+    border: solid 1px transparent;
+    border-radius: 30px;
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 10px 20px;
+}
+
+.todoForm__input:focus {
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+}
+
+.todoForm__input.invalid {
+    animation: fx-shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    backface-visibility: hidden;
+    border-color: var(--color-error);
+    perspective: 1000px;
+    transform: translate3d(0, 0, 0);
+}
+
+.todoForm__inputError {
+    background: var(--color-error);
+    border-radius: 2px;
+    color: var(--color-text-light);
+    font-size: .8rem;
+    margin: 5px 100px 5px 15px;
+    min-height: 24px;
+    padding: 4px 10px;
+}
+
+.todoForm__inputError[hidden] {
+    display: block;
+    visibility: hidden;
+}
+
+.todoForm__button {
+    background: var(--color-button-bg);
+    border: solid 1px rgba(255, 255, 255, .3);
+    border-radius: 30px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+    color: var(--color-button-text);
+    font-weight: 500;
+    padding: 10px 20px;
+}
+
+.todoForm__button:hover:not(:disabled) {
+    background: var(--color-button-bg-hover);
+    border: solid 1px rgba(255, 255, 255, .5);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+.todoForm__button:active {
+    box-shadow: none;
+    padding: 11px 20px 9px;
+}
+
+.todoForm__button:disabled {
+    opacity: .5;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * TodoList
+ *--------------------------------------------------------------------------------------------------------------------*/
+.todoList {
+    border-bottom: solid 1px rgba(255, 255, 255, .2);
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    max-height: 400px;
+    margin-bottom: 30px;
+    overflow: auto;
+    position: absolute;
+    padding: 20px 15px 10px 0;
+    right: -15px;
+    top: 80px;
+}
+
+.todoList:empty::before {
+    content: attr(data-empty-list-message);
+    color: var(--color-text-light);
+    line-height: 2;
+    padding: 7px 20px;
+}
+
+.todoList__item {
+    align-items: center;
+    border-radius: 30px;
+    display: flex;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+    padding: 7px 8px 7px 20px;
+    outline: none;
+}
+
+    .todoList__item:hover {
+        background: rgba(255, 255, 255, .2);
+        cursor: pointer;
+    }
+
+    .todoList__item:focus {
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .3);
+    }
+
+.todoList__itemText {
+    color: var(--color-text-light);
+    flex-grow: 1;
+}
+
+    .todoList__item.done .todoList__itemText {
+        text-decoration: line-through;
+        opacity: .7;
+    }
+
+.todoList__itemControls {
+    flex-grow: 0;
+}
+
+.todoList__itemDeleteButton {
+    background: transparent url("data:image/svg+xml,%3C%3Fxml version='1.0' %3F%3E%3Csvg baseProfile='tiny' height='24px' version='1.2' viewBox='0 0 24 24' width='24px' xml:space='preserve' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cpath fill='%23fff' d='M12,4c-4.419,0-8,3.582-8,8s3.581,8,8,8s8-3.582,8-8S16.419,4,12,4z M15.707,14.293c0.391,0.391,0.391,1.023,0,1.414 C15.512,15.902,15.256,16,15,16s-0.512-0.098-0.707-0.293L12,13.414l-2.293,2.293C9.512,15.902,9.256,16,9,16 s-0.512-0.098-0.707-0.293c-0.391-0.391-0.391-1.023,0-1.414L10.586,12L8.293,9.707c-0.391-0.391-0.391-1.023,0-1.414 s1.023-0.391,1.414,0L12,10.586l2.293-2.293c0.391-0.391,1.023-0.391,1.414,0s0.391,1.023,0,1.414L13.414,12L15.707,14.293z'/%3E%3C/svg%3E%0A") center no-repeat;
+    background-size: 36px;
+    cursor: pointer;
+    border: none;
+    height: 26px;
+    vertical-align: middle;
+    visibility: hidden;
+    padding: 0;
+    width: 30px;
+}
+    .todoList__itemDeleteButton:hover {
+        background-size: 38px;
+    }
+
+    .todoList__item:hover .todoList__itemDeleteButton {
+        visibility: visible;
+    }
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * Progress Bar
+ *--------------------------------------------------------------------------------------------------------------------*/
+.todoProgress {
+    background: rgba(255, 255, 255, .2);
+    border-radius: 4px;
+    height: 4px;
+    overflow: hidden;
+    width: 200px;
+}
+.todoProgress__bar {
+    background: #fff;
+    height: 100%;
+    transition: width .2s ease-out;
+    width: 0;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------
+ * Animations
+ *--------------------------------------------------------------------------------------------------------------------*/
+@keyframes fx-shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
